@@ -7,9 +7,11 @@
 
 (defn get-reader
   [file-name]
-  (if (= :stdin file-name)
-    (InputReader. System/in)
-    (InputReader. (FileInputStream. file-name))))
+  (if (instance? InputReader file-name)
+    file-name
+    (if (= :stdin file-name)
+      (InputReader. System/in)
+      (InputReader. (FileInputStream. file-name)))))
 
 
 (defn delete-if-exists

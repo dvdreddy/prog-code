@@ -24,9 +24,8 @@
         ^MinMaxPriorityQueue drier (create-min-max-pq n)]
     (dorun (map #(.add laundry [%1 %2]) w (range n)))
     (loop [lx 0 tx 0]
-      (if (== lx 0)
-        (println " lx val is " lx tx " main-log " l n m d
-                 " drier size " (.size drier) " laundry size " (.size laundry)))
+      ;; (println " lx val is " lx tx " main-log " l n m d
+      ;;          " drier size " (.size drier) " laundry size " (.size laundry))
       (if (== lx l)
         tx
         (let [drier-peek (.peek drier)
@@ -34,10 +33,10 @@
           (if (and (not (nil? drier-peek))
                    (or (<= drier-peek laundry-peek)
                        (>= (.size drier) (min d l))
-                       (> (+ lx (.size drier) l))))
+                       (> (+ lx (.size drier)) l)))
             (recur (+ lx 1) (max (.poll drier) tx))
             (let [[cur-time cur-ind] (.poll laundry)]
-              (.add drier (+ laundry-peek d))
+              (.add drier (+ (max tx cur-time) d))
               (.add laundry [(+ cur-time (get w cur-ind))
                              cur-ind])
               (recur lx (max tx cur-time)))))))))
@@ -60,8 +59,9 @@
          t (int (.nextInt reader))]
      (->> (range 1 (+ t 1))
           (map (fn [i]
-                 (let [vals (get-input reader)]
-                   (println "Processing Case" i)
-                   (str "Case #" i ": " (apply main-log vals)))))
+                 (let [vals (get-input reader)
+                       res (apply main-log vals)]
+                   (println "Processing Case" i res)
+                   (str "Case #" i ": " res))))
           (str/join "\n")
           (spit-internal output-file)))))

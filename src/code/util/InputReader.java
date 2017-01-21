@@ -11,6 +11,10 @@ public class InputReader {
     public BufferedReader reader;
     public StringTokenizer tokenizer;
 
+    // used for proxying stuff from clojure
+    public InputReader() {
+    }
+
     public InputReader(InputStream stream) {
         reader = new BufferedReader(new InputStreamReader(stream), 32768);
         tokenizer = null;
@@ -27,6 +31,19 @@ public class InputReader {
         return tokenizer.nextToken();
     }
 
+    public String nextLine() {
+        if (tokenizer.hasMoreTokens()) {
+            throw new RuntimeException("Cannot read lines here");
+        }
+        try {
+            String sx = reader.readLine();
+            return sx.endsWith("\n") ?
+                    sx.substring(0, sx.length() - 1) : sx;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public int nextInt() {
         return Integer.parseInt(next());
     }
@@ -37,5 +54,9 @@ public class InputReader {
 
     public float nextFloat() {
         return Float.parseFloat(next());
+    }
+
+    public double nextDouble() {
+        return Double.parseDouble(next());
     }
 }

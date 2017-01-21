@@ -1,0 +1,3 @@
+#!/bin/bash
+cd /Users/dreddy/proj/clojure_projects/gcj-fifteen/src/code/gcj_sixteen/distributed
+/usr/bin/java -Djava.library.path=/Users/dreddy/proj/temp/sol_upload_dir/dcj/dcj/../libraries:/Users/dreddy/proj/clojure_projects/gcj-fifteen/src/code/gcj_sixteen/distributed -classpath /Users/dreddy/proj/temp/sol_upload_dir/dcj/dcj/../libraries:/Users/dreddy/proj/clojure_projects/gcj-fifteen/src/code/gcj_sixteen/distributed Wrapper
